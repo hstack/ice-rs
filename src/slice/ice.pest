@@ -7,7 +7,7 @@ ice = {
 }
 
 WHITESPACE = _{ " " | "\t" }
-COMMENT = _{ ("//" ~ (!NEWLINE ~ ANY)*) | ( "/*" ~ ("!*/" ~ ANY)*) }
+COMMENT = _{ ("//" ~ (!NEWLINE ~ ANY)*) | ("/*" ~ (!"*/" ~ ANY)* ~ "*/")  }
 
 pragma = _{ "#pragma once" }
 lang_include = _{ "[["  ~ (!"]]" ~ ANY)* ~ "]]"}

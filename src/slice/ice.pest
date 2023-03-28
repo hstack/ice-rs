@@ -7,7 +7,7 @@ ice = {
 }
 
 WHITESPACE = _{ " " | "\t" }
-COMMENT = _{ ("//" ~ (!NEWLINE ~ ANY)*) | ( "/*" ~ ("!*/" ~ ANY)*) }
+COMMENT = _{ ("//" ~ (!NEWLINE ~ ANY)*) | ("/*" ~ (!"*/" ~ ANY)* ~ "*/")  }
 
 pragma = _{ "#pragma once" }
 lang_include = _{ "[["  ~ (!"]]" ~ ANY)* ~ "]]"}
@@ -32,7 +32,8 @@ keyword_include = { "#include" }
 keyword_idempotent = { "idempotent" }
 
 optional_tag = { ASCII_DIGIT+ }
-file_include = { keyword_include ~ "<" ~ identifier ~ ".ice" ~ ">" ~ NEWLINE* }
+file_include = { keyword_include ~ "<" ~ file_path ~ ".ice" ~ ">" ~ NEWLINE* }
+file_path = _{ identifier ~ ("/" ~ identifier)* }
 block_open = { NEWLINE* ~ "{" ~ NEWLINE* }
 block_close = { "}" ~ ";"? ~ NEWLINE* }
 

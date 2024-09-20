@@ -29,11 +29,72 @@ pub trait OptionalType {
     fn optional_type() -> u8;
 }
 
+impl OptionalType for bool {
+    fn optional_type() -> u8 {
+        0
+    }
+}
+
+impl OptionalType for u8 {
+    fn optional_type() -> u8 {
+        0
+    }
+}
+
+impl OptionalType for i8 {
+    fn optional_type() -> u8 {
+        0
+    }
+}
+
+impl OptionalType for u16 {
+    fn optional_type() -> u8 {
+        1
+    }
+}
+
+impl OptionalType for i16 {
+    fn optional_type() -> u8 {
+        1
+    }
+}
+
+impl OptionalType for u32 {
+    fn optional_type() -> u8 {
+        2
+    }
+}
+
 impl OptionalType for i32 {
     fn optional_type() -> u8 {
         2
     }
 }
+
+impl OptionalType for f32 {
+    fn optional_type() -> u8 {
+        2
+    }
+}
+
+impl OptionalType for u64 {
+    fn optional_type() -> u8 {
+        3
+    }
+}
+
+impl OptionalType for i64 {
+    fn optional_type() -> u8 {
+        3
+    }
+}
+
+impl OptionalType for f64 {
+    fn optional_type() -> u8 {
+        3
+    }
+}
+
 
 impl OptionalType for String {
     fn optional_type() -> u8 {

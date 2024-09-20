@@ -44,7 +44,7 @@ interface_block = { keyword_interface ~ identifier ~ block_open ~ (function)* ~ 
 enum_block = { keyword_enum ~ identifier ~ block_open ~ enum_lines ~ block_close }
 struct_block = { keyword_struct ~ identifier ~ block_open ~ struct_line+ ~ block_close }
 extends = { keyword_extends ~ identifier }
-class_block = { keyword_class ~ identifier ~ extends? ~ block_open ~ class_line+ ~ block_close }
+class_block = { keyword_class ~ identifier ~ extends? ~ block_open ~ class_line* ~ block_close }
 exception_block = { keyword_exception ~ identifier ~ extends? ~ block_open ~ struct_line* ~ block_close }
 
 fn_return = { keyword_optional? ~ identifier }

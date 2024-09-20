@@ -8,7 +8,7 @@ use std::fs::File;
 use std::collections::BTreeMap;
 use std::rc::Rc;
 use std::cell::RefCell;
-use inflector::cases::{pascalcase, snakecase};
+// use inflector::cases::{pascalcase, snakecase};
 use quote::{__private::TokenStream, format_ident, quote};
 use std::io::Write;
 use super::types::IceType;
@@ -82,7 +82,7 @@ impl Module {
     }
 
     pub fn snake_name(&self) -> String {
-        snakecase::to_snake_case(&self.name)
+        String::from(&self.name)
     }
 
     pub fn add_enum(&mut self, enumeration: Enum) {
@@ -110,6 +110,10 @@ impl Module {
     }
 
     fn uses(&self, super_mod: &str) -> UseStatements {
+        // for (k, v) in self.type_map.as_ref().borrow().iter() {
+        //     println!("USES: {} = {}", k, v);
+        // }
+        // println!("-------------");
         let mut use_statements = UseStatements::new();
 
         use_statements.use_crate(quote! { use async_trait::async_trait });
@@ -154,6 +158,11 @@ impl Module {
                 for member in &item.members {
                     match &member.r#type {
                         IceType::CustomType(name) => {
+                            // println!("Search for {}", name);
+                            // for (k, v) in self.type_map.as_ref().borrow().iter() {
+                            //     println!("  USES: {} = {}", k, v);
+                            // }
+
                             let use_statement = self.type_map.as_ref().borrow().get(name).unwrap().clone();
                             if !use_statement.eq(&self.snake_name()) {
                                 let super_token = format_ident!("{}", super_mod);
@@ -239,7 +248,7 @@ impl Module {
         }
 
         for (id, vartype) in &self.typedefs {
-            let id_str = format_ident!("{}", pascalcase::to_pascal_case(&id));
+            let id_str = format_ident!("{}", &id);
             let var_token = vartype.token();
             tokens.push(quote! {
                 type #id_str = #var_token;

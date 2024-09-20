@@ -90,6 +90,10 @@ impl IceType {
                 let sub_type = type_name.token();
                 quote!{ Option::<#sub_type> }
             }
+            IceType::SequenceType(type_name) => {
+                let sub_type = type_name.token();
+                quote!{ Vec::<#sub_type> }
+            }
             _ => self.token(),
         }
     }

@@ -5,7 +5,7 @@ use std::rc::Rc;
 use std::cell::RefCell;
 use std::io::prelude::*;
 use escape::escape;
-use inflector::cases::{classcase, pascalcase, snakecase};
+// use inflector::cases::{classcase, pascalcase, snakecase};
 use pest::Parser;
 use pest::iterators::Pairs;
 use quote::__private::TokenStream;
@@ -144,7 +144,7 @@ impl ParsedObject for Enum {
                 Rule::keyword_enum => {},
                 Rule::identifier => { 
                     enumeration.ice_id = String::from(child.as_str());
-                    let id_str = format_ident!("{}", classcase::to_class_case(&enumeration.ice_id));
+                    let id_str = format_ident!("{}", &enumeration.ice_id);
                     enumeration.id = quote! { #id_str };
                 },
                 Rule::block_open => {},
@@ -216,7 +216,7 @@ impl ParsedObject for StructMember {
                 },
                 Rule::identifier => {
                     member.ice_id = String::from(child.as_str());
-                    let id_str = format_ident!("{}", escape::escape(&snakecase::to_snake_case(&member.ice_id)));
+                    let id_str = format_ident!("{}", escape::escape(&member.ice_id));
                     member.id = quote! { #id_str };
                 },
                 Rule::struct_line_default | Rule::class_line_default => {
@@ -243,7 +243,7 @@ impl ParsedObject for Struct {
                 Rule::keyword_struct => {},
                 Rule::identifier => { 
                     structure.ice_id = String::from(child.as_str());
-                    let id_str = format_ident!("{}", classcase::to_class_case(&structure.ice_id));
+                    let id_str = format_ident!("{}", &structure.ice_id);
                     structure.id = quote! { #id_str };
                 },
                 Rule::block_open => {},
@@ -271,7 +271,7 @@ impl ParsedObject for Class {
                 Rule::keyword_class => {},
                 Rule::identifier => { 
                     class.ice_id = String::from(child.as_str());
-                    let id_str = format_ident!("{}", classcase::to_class_case(&class.ice_id));
+                    let id_str = format_ident!("{}", &class.ice_id);
                     class.id = quote! { #id_str };
                 },
                 Rule::extends => {
@@ -311,7 +311,7 @@ impl ParsedObject for Interface {
                 Rule::keyword_interface => {},
                 Rule::identifier => { 
                     interface.ice_id = String::from(child.as_str());
-                    let id_str = format_ident!("{}", classcase::to_class_case(&interface.ice_id));
+                    let id_str = format_ident!("{}", &interface.ice_id);
                     interface.id = quote! { #id_str };
                 },
                 Rule::block_open => {},
@@ -344,7 +344,7 @@ impl ParsedObject for Function {
                 },
                 Rule::fn_name => { 
                     function.ice_id = String::from(child.as_str());
-                    let id_str = format_ident!("{}", snakecase::to_snake_case(&function.ice_id));
+                    let id_str = format_ident!("{}", &function.ice_id);
                     function.id = quote! { #id_str };
                     
                 },
@@ -444,7 +444,7 @@ impl ParsedObject for FunctionArgument {
                     }
                 },
                 Rule::identifier => {
-                    let id_str = format_ident!("{}", escape(&snakecase::to_snake_case(child.as_str())));
+                    let id_str = format_ident!("{}", escape(child.as_str()));
                     id = quote! { #id_str }
                 },
                 Rule::keyword_out => out = true,
@@ -476,7 +476,7 @@ impl ParsedObject for Exception {
                 Rule::keyword_exception => {},
                 Rule::identifier => { 
                     exception.ice_id = String::from(child.as_str());
-                    let id_str = format_ident!("{}", pascalcase::to_pascal_case(&exception.ice_id));
+                    let id_str = format_ident!("{}", &exception.ice_id);
                     exception.id = quote! { #id_str };
                 },
                 Rule::block_open => {},

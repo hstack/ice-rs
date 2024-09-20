@@ -36,6 +36,11 @@ impl Class {
             let id_token = &member.id;
             let var_token = &member.r#type.token_from();
             match member.r#type {
+                // IceType::SequenceType(inner_type) => {
+                //     quote! {
+                //
+                //     }
+                // }
                 IceType::Optional(_, _) => {
                     quote! {
                         let mut #id_token = None
